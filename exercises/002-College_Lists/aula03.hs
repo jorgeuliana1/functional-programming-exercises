@@ -63,7 +63,7 @@ numToList x = reverse [ getLast (x `div` 10^n) | n <- [ 0..(numberOfDigits x - 1
 numIsPalindrome :: Int -> Bool
 numIsPalindrome x = if (numToList x) == reverse (numToList x) then True else False
 
--- k. Convert an binary number to a decimal number
+-- k. Convert a binary number to a decimal number
 binaryToDecimal :: Int -> Int
 binaryToDecimal 1 = 1
 binaryToDecimal 0 = 0
