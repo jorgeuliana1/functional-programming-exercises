@@ -21,12 +21,12 @@ fibonacci x
 
 -- e. Obtain the first element of a list
 first :: [a] -> a
-first (x:xs) = x
+first (x:_) = x
 
 -- f. Take the first element of a list
 firstLess :: [a] -> [a]
 firstLess [] = []
-firstLess (x:xs) = xs
+firstLess (_:xs) = xs
 
 -- g. Obtain the last element of a list
 lastElem :: [a] -> a
@@ -38,5 +38,12 @@ lastLess [] = []
 lastLess xs = reverse (firstLess (reverse xs))
 
 -- i. Define an 'XOR' operator '|*|'
+{--
 (|*|) :: Bool -> Bool -> Bool
-(|*|) a b = (a /= b) && (b /= False || a /= False)
+a |*| b = (a /= b) && (b /= False || a /= False)
+--}
+
+-- j. Redefine 'XOR' using wildcards
+(|*|) :: Bool -> Bool -> Bool
+True |*| b = (b /= True)
+False |*| b = (b /= False)
