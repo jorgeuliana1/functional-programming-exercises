@@ -20,6 +20,22 @@ multTable n = [(i, n, i*n) | i <- [0..9]]
 matLin :: Int -> Int -> [(Int, Int)]
 matLin n m  = [(i, j) | i <- [0..n - 1], j <- [0..m - 1]]
 
--- e. List of tuples with indexes of a (n, m) matrix (must show ordenation by columns)
+-- f. List of tuples with indexes of a (n, m) matrix (must show ordenation by columns)
 matCol :: Int -> Int -> [(Int, Int)]
 matCol n m  = [(j, i) | i <- [0..m - 1], j <- [0..n - 1]]
+
+-- g. List of tuples with indexes of a (l, n, m) matrix
+indMat3D :: Int -> Int -> Int -> [(Int, Int, Int)]
+indMat3D l n m  = [(h, i, j) | h <- [0..l-1], i <- [0..n - 1], j <- [0..m - 1]]
+
+-- h. Obtain the multiplication table from the first n non-negative numbers:
+multiTable :: Int -> [(Int, Int, Int)]
+multiTable n = [(i, j, i * j) | j <- [0..n], i <- [0..9]]
+
+-- i. Create a list of lists, where each list is the multiplication table of a number:
+multiTableLL :: Int -> [[(Int, Int, Int)]]
+multiTableLL n = [[(i, j, i * j) | i <- [0..9]] | j <- [0..n]]
+
+-- i. Obtain the multiplication table of two lists:
+multiTableCL :: [Int] -> [Int] -> [(Int, Int, Int)]
+multiTableCL xs ys = [(i, j, i * j) | i <- xs, j <- ys]
