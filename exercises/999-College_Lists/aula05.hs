@@ -82,5 +82,5 @@ positions :: (Eq a) => a -> [a] -> [Int]
 positions x xs = [i | i <- [0..length xs - 1], xs !! i == x]
 
 -- t. Generate a list containing the first prime numbers.
-isPrime :: Int -> Bool
-isPrime n = length [True | i <- [2..n - 1], n `mod` i == 0] == 0
+nPrimesLazy :: Int -> [Int]
+nPrimesLazy n = take n [i | i <- [2..], length ([j | j <- [2..i - 1], i `mod` j == 0]) == 0]
