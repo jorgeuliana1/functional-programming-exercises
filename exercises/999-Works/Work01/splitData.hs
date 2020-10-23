@@ -24,8 +24,8 @@ getRandomListWithoutRepetitions setLength maxValue ns = do
     ns <- getRandomListWithoutRepetitions (setLength - 1) maxValue (n:ns)
     return ns
 
--- An elegant wrapper for the getRandomListWithoutRepetitions function.
--- This function is called when you want to generate a list of random integers.
+{- An elegant wrapper for the getRandomListWithoutRepetitions function.
+   This function is called when you want to generate a list of random integers. -}
 getTestSetIndexes :: Int -> Float -> IO [Int]
 getTestSetIndexes dataSetLen testSetPercentage = do
     let setLengthFlt = (read (show dataSetLen) :: Float) * testSetPercentage
@@ -35,7 +35,7 @@ getTestSetIndexes dataSetLen testSetPercentage = do
 
 {- This function receives a dataset and the output of the getTestSetIndexes function and returns the
    correspondent splitted datasets. -}
-splitDataSet :: DataSet -> [Int] -> (DataSet, DataSet)
+splitDataSet :: IrisDataSet -> [Int] -> (IrisDataSet, IrisDataSet)
 splitDataSet dataSet testSetIndexes = 
     ([dataSet !! i | i <- [0..(length dataSet) - 1], not (elem i testSetIndexes)], -- Getting the train set
      [dataSet !! i | i <- testSetIndexes]) -- Getting the test set
