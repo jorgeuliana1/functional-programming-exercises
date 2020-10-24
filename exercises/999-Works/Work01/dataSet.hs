@@ -22,6 +22,13 @@ dataSetCategoriesList dataSet currentIndex categories = do
         else
             dataSetCategoriesList dataSet (currentIndex - 1) (currentCategory:categories)
 
--- An elegant wrapper for dataSetCategoriesList
+-- An elegant wrapper for dataSetCategoriesList.
 dataSetCategories :: IrisDataSet -> [IrisCategory]
 dataSetCategories dataSet = dataSetCategoriesList dataSet (length dataSet) []
+
+-- Splits dataset in input and output.
+splitDataSetInputOutput :: IrisDataSet -> ([IrisDataInput], [IrisCategory])
+splitDataSetInputOutput dataSet = (input, output)
+    where
+        input = [ (a, b, c, d) | (a, b, c, d, _) <- dataSet ]
+        output = [ e | (_, _, _, _, e) <- dataSet ]
