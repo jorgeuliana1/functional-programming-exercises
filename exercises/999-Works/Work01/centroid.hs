@@ -1,5 +1,6 @@
 module Centroid where
 import DataSet
+import DataSetCategories
 import TupleMath
 
 -- Returns a quadruple of centroids of the given category.
@@ -10,7 +11,7 @@ categoryCentroid dataSet category =
         | (value1, value2, value3, value4, valueCategory) <- dataSet, valueCategory == category
     ]
     where
-        categoryLen = read (show (categoryLengthForIrisDataSet dataSet category)) :: Float
+        categoryLen = read (show (categoryLength dataSet category)) :: Float
 
 -- Returns a centroid for each given category.
 centroids :: IrisDataSet -> [IrisCategory] -> [IrisDataInput]

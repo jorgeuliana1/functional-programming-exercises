@@ -1,8 +1,7 @@
-import ReadCSV
-import SplitData
+import DataSetParse
+import DataSetSplit
+import DataSetCategories
 import Centroid
-import DataSet
-import System.Random
 
 -- The main function currently only serves testing purposes.
 main = do
