@@ -2,6 +2,7 @@ import DataSetParse
 import DataSetSplit
 import DataSetCategories
 import Centroid
+import NearestNeighbour
 
 -- The main function currently only serves testing purposes.
 main = do
@@ -17,3 +18,7 @@ main = do
     let trainCentroids = centroids trainSet categories
     let accuracyCentroids = centroidAccuracy trainCentroids categories testInput testOutput
     print accuracyCentroids
+
+    -- Showing the k-NN method accuracy:
+    let accuracyKNN = nearestNeighbourAccuracy testSet trainSet
+    print (accuracyKNN)
