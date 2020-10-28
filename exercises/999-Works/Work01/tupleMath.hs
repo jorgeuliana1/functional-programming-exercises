@@ -68,23 +68,6 @@ tupleSqrt quadruple = (sqrt v1, sqrt v2, sqrt v3, sqrt v4)
         (v1, v2, v3, v4) = quadruple
 
 {-
-Uses the euclidean length to find the vector (tuple) with least magnitude.
-# Input
-quadruples :: [(a, a, a, a)] (List of tuples to be analyzed)
-# Ouput
-resultingQuadruple :: (a, a, a, a) (The tuple with least magnitude in the
-                                    given list)
--}
-tupleMinimum :: [(Float, Float, Float, Float)] -> (Float, Float, Float, Float)
-tupleMinimum quadruples = [ quadruples !! i | i <- [0..(length quadruples) - 1], equivalentValue (quadruples !! i) == minEucLength ] !! 0
-    where
-        minEucLength = minimum equivalentValues -- Minimum Euclidean Length
-        equivalentValues = [ equivalentValue quadruple | quadruple <- quadruples ]
-        equivalentValue quadruple = sqrt (a^2 + b^2 + c^2 + d^2) -- Euclidean length
-            where
-                (a, b, c, d) = quadruple
-
-{-
 Works as "for-each" subtraction for quadruples.
 # Input
 quadrupleA :: (a, a, a, a) (First member of the subtraction operation)
