@@ -1,6 +1,5 @@
 module TupleMath where
 
--- 
 {-
 Sums every value of a list of quadruples and returns the resulting quadruple.
 # Input
@@ -15,6 +14,18 @@ sumQuadruples originTuples =
       sum [ v | (_, v, _, _) <- originTuples ],
       sum [ v | (_, _, v, _) <- originTuples ],
       sum [ v | (_, _, _, v) <- originTuples ] )
+
+{-
+Returns the sum of the elements of the quadruple.
+# Input
+quadruple :: [(a, a, a, a)] (List of tuples to perform the sum)
+# Output
+result :: a (The result of the sum of elements of the tuple)
+-}
+sumElements :: (Num a) => (a, a, a, a) -> a
+sumElements quadruple = a + b + c + d
+    where
+        (a, b, c, d) = quadruple
 
 {-
 Works as "for-each" division for quadruples.
@@ -99,3 +110,15 @@ tupleAbs :: (Num a) => (a, a, a, a) -> (a, a, a, a)
 tupleAbs quadruple = (abs v1, abs v2, abs v3, abs v4)
     where
         (v1, v2, v3, v4) = quadruple
+
+{-
+Classical euclidean distance implementation.
+# Input
+quadrupleA :: (a, a, a, a) (Quadruple representing a vector in R4)
+quadrupleB :: (a, a, a, a) (Quadruple representing a vector in R4)
+# Output
+distance :: a (Distance between quadrupleA and quadrupleB)
+-}
+euclideanDistance :: (Floating a) => (a, a, a, a) -> (a, a, a, a) -> a
+euclideanDistance quadrupleA quadrupleB =
+    sqrt (sumElements ((quadrupleA `tupleSubtraction` quadrupleB) ^^^^ 2))

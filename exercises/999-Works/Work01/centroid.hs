@@ -42,10 +42,8 @@ index :: Int (Index of the most probable class to fit in the given data input)
 nearestCentroidIndex :: [IrisDataInput] -> IrisDataInput -> Int
 nearestCentroidIndex centroids dataInput = head (take 1 [ i | i <- [0..], (distances !! i) == smallestCentroidDistance ])
     where
-        smallestCentroidDistance = tupleMinimum distances
-        distances = [distance dataInput centroid | centroid <- centroids]
-        distance quadrupleA quadrupleB = tupleSqrt (tupleAbs ((quadrupleA ^^^^ 2) `tupleSubtraction` (quadrupleB ^^^^ 2)))
-        -- Euclidian distance
+        smallestCentroidDistance = minimum distances
+        distances = [euclideanDistance dataInput centroid | centroid <- centroids]
 
 {-
 Returns the accuracy of the centroid algorithm, given the centroids coordinates, the default categories list
