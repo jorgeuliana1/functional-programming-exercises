@@ -1,10 +1,10 @@
 module NearestNeighbour where
-import TupleMath
+import VectorMath
 import DataSet
 import DataSetCategories
 
 {-
-Gets a list of the distance of the given vector (tuple) to a list of vectors (tuple) in R4.
+Gets a list of the distance of the given vector (vector) to a list of vectors (vector) in R4.
 # Input
 dataInput :: IrisDataInput (Vector to be used as reference)
 dataSet :: IrisDataSet (List of vectors to have the distance measured)

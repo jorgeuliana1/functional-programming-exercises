@@ -7,7 +7,7 @@ import NearestNeighbour
 -- The main function currently only serves testing purposes.
 main = do
     -- Loading and splitting dataset:
-    dataSet <- parseDataFromCSVFile "../iris.csv"
+    dataSet <- parseDataFromCSVFile "iris.csv"
     initializeRandomSettings 1337
     testSetIndexes <- getTestSetIndexes 150 0.30
     let (trainSet, testSet) = splitDataSet dataSet testSetIndexes

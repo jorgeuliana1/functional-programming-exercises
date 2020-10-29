@@ -1,10 +1,10 @@
 module Centroid where
 import DataSet
 import DataSetCategories
-import TupleMath
+import VectorMath
 
 {-
-Returns a quadruple (centroid of the given category).
+Returns a vector (centroid of the given category).
 # Input
 dataSet :: IrisDataSet (The data set to be fit)
 category :: IrisCategory (The category to be fit)
