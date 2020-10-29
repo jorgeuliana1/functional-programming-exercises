@@ -80,5 +80,5 @@ inputOutput :: ([IrisDataInput], [IrisCategory]) (Tuple containing the data
 splitDataSetInputOutput :: IrisDataSet -> ([IrisDataInput], [IrisCategory])
 splitDataSetInputOutput dataSet = (input, output)
     where
-        input = [ (a, b, c, d) | (a, b, c, d, _) <- dataSet ]
-        output = [ e | (_, _, _, _, e) <- dataSet ]
+        input = [ inputs | (inputs, _) <- dataSet ]
+        output = [ category | (_, category) <- dataSet ]

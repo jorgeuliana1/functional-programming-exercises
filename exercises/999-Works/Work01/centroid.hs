@@ -13,12 +13,12 @@ centroid :: IrisDataInput (Centroid of the given category)
 -}
 categoryCentroid :: IrisDataSet -> IrisCategory -> IrisDataInput
 categoryCentroid dataSet category =
-    sumQuadruples [
-        ( value1, value2, value3, value4 ) //// categoryLen
-        | (value1, value2, value3, value4, valueCategory) <- dataSet, valueCategory == category
+    sumVectors [
+        inputs //// categoryLen
+        | (inputs, valueCategory) <- dataSet, valueCategory == category
     ]
     where
-        categoryLen = read (show (categoryLength dataSet category)) :: Float
+        categoryLen = read (show (categoryLength dataSet category)) :: Double
 
 {-
 Returns a centroid for each given category.
@@ -60,11 +60,11 @@ testDataSetOutputs :: [IrisCategory] (Expected outputs, each index is correspond
 accurary :: Float (Floating point number in the interval [0, 1] representing the percentage
                    of correct predictions of the model.)
 -}
-centroidAccuracy :: [IrisDataInput] -> [IrisCategory] -> [IrisDataInput] -> [IrisCategory] -> Float
+centroidAccuracy :: [IrisDataInput] -> [IrisCategory] -> [IrisDataInput] -> [IrisCategory] -> Double
 centroidAccuracy centroids categories testDataSetInputs testDataSetOutputs = sum resultsList
     where
         resultsList = [ 1.00 / testDataSetLength
             |i <- [0..((length testDataSetOutputs) - 1)],
             (categories !! (centroidIndex i)) ==  (testDataSetOutputs !! i)]
-        testDataSetLength = read (show (length testDataSetInputs)) :: Float
+        testDataSetLength = read (show (length testDataSetInputs)) :: Double
         centroidIndex i = nearestCentroidIndex centroids (testDataSetInputs !! i)

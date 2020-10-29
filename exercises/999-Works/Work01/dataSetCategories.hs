@@ -10,7 +10,7 @@ category :: IrisCategory (The category to be analyzed)
 length :: Int (The number of elements of a certain category in the data set)
 -}
 categoryLength :: IrisDataSet -> IrisCategory -> Int
-categoryLength dataSet category = sum [ 1 | (_, _, _, _, samCat) <- dataSet, samCat == category ]
+categoryLength dataSet category = sum [ 1 | (_, samCat) <- dataSet, samCat == category ]
 
 {-
 Returns a list of the categories contained in the given data set (no repetitions).
@@ -25,13 +25,13 @@ categories :: [IrisCategory] (List of the categories contained in the data set)
 -}
 dataSetCategoriesList :: IrisDataSet -> Int -> [IrisCategory] -> [IrisCategory]
 dataSetCategoriesList dataSet 1 categories = do
-    let (_, _, _, _, currentCategory) = dataSet !! 0
+    let (_, currentCategory) = dataSet !! 0
     if (elem currentCategory categories)
         then categories
         else
             currentCategory:categories
 dataSetCategoriesList dataSet currentIndex categories = do
-    let (_, _, _, _, currentCategory) = dataSet !! (currentIndex - 1)
+    let (_, currentCategory) = dataSet !! (currentIndex - 1)
     if (elem currentCategory categories)
         then dataSetCategoriesList dataSet (currentIndex - 1) categories
         else
