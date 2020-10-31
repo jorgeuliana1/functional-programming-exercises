@@ -46,25 +46,18 @@ nearestCentroidIndex centroids dataInput = head (take 1 [ i | i <- [0..], (dista
         distances = [euclideanDistance dataInput centroid | centroid <- centroids]
 
 {-
-Returns the accuracy of the centroid algorithm, given the centroids coordinates, the default categories list
-the test dataset inputs and outputs.
+Returns the predictions using the centroid algorithm, given the centroids coordinates, the default categories list
+the test data set inputs.
 # Input
 centroids :: [IrisDataInput] (List of centroids)
 categories :: [IrisCategory] (List of categories.
                               Observation: The categories must have the same index as the
                               corresponding centroid in `centroids`.)
 testDataSetInputs :: [IrisDataInput] (The inputs to be evaluated by the model)
-testDataSetOutputs :: [IrisCategory] (Expected outputs, each index is correspondent to
-                                      the same 'testDataSetInputs' index)
 # Ouput
-accurary :: Float (Floating point number in the interval [0, 1] representing the percentage
-                   of correct predictions of the model.)
+predictionOutputs :: [IrisCategory] (Predicted outputs, each index is correspondent to
+                                     the same 'testDataSetInputs' index)
 -}
-centroidAccuracy :: [IrisDataInput] -> [IrisCategory] -> [IrisDataInput] -> [IrisCategory] -> Double
-centroidAccuracy centroids categories testDataSetInputs testDataSetOutputs = sum resultsList
-    where
-        resultsList = [ 1.00 / testDataSetLength
-            |i <- [0..((length testDataSetOutputs) - 1)],
-            (categories !! (centroidIndex i)) ==  (testDataSetOutputs !! i)]
-        testDataSetLength = read (show (length testDataSetInputs)) :: Double
-        centroidIndex i = nearestCentroidIndex centroids (testDataSetInputs !! i)
+predictDataSetCentroid :: [IrisDataInput] -> [IrisCategory] -> [IrisDataInput] -> [IrisCategory]
+predictDataSetCentroid centroids categories testSetInputs = [ categories !! (nearestCentroidIndex centroids dInput)
+                                                            | dInput <- testSetInputs ]

@@ -3,6 +3,7 @@ import DataSetSplit
 import DataSetCategories
 import Centroid
 import NearestNeighbour
+import Scoring
 
 -- The main function currently only serves testing purposes.
 main = do
@@ -16,10 +17,11 @@ main = do
 
     -- Showing the centroids accuracy:
     let trainCentroids = centroids trainSet categories
-    let accuracyCentroids = centroidAccuracy trainCentroids categories testInput testOutput
+    let predictionsCentroids = predictDataSetCentroid trainCentroids categories testInput
+    let accuracyCentroids = evaluatePrediction predictionsCentroids testOutput
     print accuracyCentroids
 
     -- Showing the k-NN method accuracy:
-    let predictionsKNN = evaluateDataSetNNeighbour testSet trainSet
-    let accuracyKNN = nearestNeighbourAccuracy testSet trainSet
-    print (predictionsKNN)
+    let predictionsKNN = predictDataSetNNeighbour testSet trainSet
+    let accuracyKNN = evaluatePrediction predictionsKNN testOutput
+    print accuracyKNN
