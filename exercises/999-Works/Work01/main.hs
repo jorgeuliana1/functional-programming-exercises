@@ -4,13 +4,14 @@ import DataSetCategories
 import Centroid
 import NearestNeighbour
 import Scoring
+import ConfusionMatrix
 
 -- The main function currently only serves testing purposes.
 main = do
     -- Loading and splitting dataset:
     dataSet <- parseDataFromCSVFile "iris.csv"
-    initializeRandomSettings 1337
-    testSetIndexes <- getTestSetIndexes 150 0.30
+    initializeRandomSettings 3
+    testSetIndexes <- getTestSetIndexes 150 0.75
     let (trainSet, testSet) = splitDataSet dataSet testSetIndexes
     let (testInput, testOutput) = splitDataSetInputOutput testSet
     let categories = dataSetCategories dataSet
@@ -25,3 +26,5 @@ main = do
     let predictionsKNN = predictDataSetNNeighbour testSet trainSet
     let accuracyKNN = evaluatePrediction predictionsKNN testOutput
     print accuracyKNN
+
+    print (confusionMatrix categories testOutput predictionsKNN)
