@@ -8,7 +8,7 @@ eCat :: IrisCategory (expected category)
 pCat :: IrisCategory (predicted category)
 eOut :: [IrisCategory] (expected outputs of the model)
 pOut :: [IrisCategory] (predicted outputs of the model)
-# Ouput
+# Output
 numConfusion :: Int (Number of occurrencies of that specific confusion)
 -}
 categoriesConfusionCount :: IrisCategory -> IrisCategory -> [IrisCategory] -> [IrisCategory] -> Int
@@ -20,7 +20,7 @@ Returns the confusion matrix of the evaluation.
 cats :: [IrisCategory] (data set categories)
 eOut :: [IrisCategory] (expected outputs of the model)
 pOut :: [IrisCategory] (predicted outputs of the model)
-# Ouput
+# Output
 confusionMatrix :: [[Int]] (the confusion matrix)
 -}
 confusionMatrix :: [IrisCategory] -> [IrisCategory] -> [IrisCategory] -> [[Int]]
