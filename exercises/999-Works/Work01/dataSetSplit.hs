@@ -17,10 +17,10 @@ n :: IO Int (Random unique number)
 -}
 generateN :: Int -> [Int] -> IO Int
 generateN maxValue ns = do
-    n <- randomRIO (0, maxValue - 1) :: IO Int
+    n <- randomRIO (1, maxValue) :: IO Int
     if (elem n ns) then
         generateN maxValue ns
-        else return n
+        else return (n - 1)
 
 {-
 Generates a list of numbers without any repetition.
