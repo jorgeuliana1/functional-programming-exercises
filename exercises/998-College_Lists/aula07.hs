@@ -14,4 +14,19 @@ replica r e
     | otherwise = [e]
 
 -- c. Select the n-esimal element of a list
--- select :: Int -> [a] -> a
+selectInternal :: Int -> Int -> [a] -> a
+selectInternal i c (x:xs)
+    | c == i = x
+    | otherwise = selectInternal i (c + 1) xs
+
+select :: Int -> [a] -> a
+select i xs = selectInternal i 0 xs
+
+-- d. Verify if an element E is in the list XS
+isIn :: (Eq a) => a -> [a] -> Bool
+isIn a [] = False
+isIn a (x:xs)
+    | a == x = True
+    | otherwise = isIn a xs
+
+--isIn :: a -> [a] -> Bool
