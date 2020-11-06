@@ -5,14 +5,21 @@ import Centroid
 import NearestNeighbour
 import Scoring
 import ConfusionMatrix
+import SimplifiedIO
 
 -- The main function currently only serves testing purposes.
 main = do
+    -- Getting info from the standard input:
+    dataSetCSVPath <- getInput "Forneca o nome do arquivo de entrada: "
+    outputTxtPath <- getInput "Forneca o nome do arquivo de saida: "
+    testCasesPercentageStr <- getInput "Forneca o percentual de exemplos de teste: "
+    let testCasesPercentage = (read testCasesPercentageStr :: Float) / 100
+    givenSeedStr <- getInput "Forneca o valor da semente para geracao randomizada: "
+
     -- Loading and splitting dataset:
-    dataSet <- parseDataFromCSVFile "iris.csv"
-    initializeRandomSettings 77
-    testSetIndexes <- getTestSetIndexes 150 0.10
-    print testSetIndexes
+    dataSet <- parseDataFromCSVFile dataSetCSVPath
+    initializeRandomSettings (read givenSeedStr :: Int)
+    testSetIndexes <- getTestSetIndexes (length dataSet) testCasesPercentage
     let (trainSet, testSet) = splitDataSet dataSet testSetIndexes
     let (testInput, testOutput) = splitDataSetInputOutput testSet
     let categories = dataSetCategories dataSet
@@ -26,7 +33,9 @@ main = do
     let predictionsKNN = predictDataSetNNeighbour testSet trainSet
     let accuracyKNN = evaluatePrediction predictionsKNN testOutput
 
-    print accuracyKNN
-    print accuracyCentroids
-    print (confusionMatrix categories testOutput predictionsKNN)
-    print (confusionMatrix categories testOutput predictionsCentroids)
+    -- Printing the accuracy:
+    putStrLn ("Acuracia(vizinho): " ++ (decimalToPercentage accuracyKNN))
+    putStrLn ("Acuracia(centroide): " ++ (decimalToPercentage accuracyCentroids))
+    
+    --print (confusionMatrix categories testOutput predictionsKNN)
+    --print (confusionMatrix categories testOutput predictionsCentroids)
