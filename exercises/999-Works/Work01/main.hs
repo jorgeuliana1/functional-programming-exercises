@@ -1,3 +1,4 @@
+import System.IO
 import DataSetParse
 import DataSetSplit
 import DataSetCategories
@@ -37,5 +38,10 @@ main = do
     putStrLn ("Acuracia(vizinho): " ++ (decimalToPercentage accuracyKNN))
     putStrLn ("Acuracia(centroide): " ++ (decimalToPercentage accuracyCentroids))
     
-    --print (confusionMatrix categories testOutput predictionsKNN)
-    --print (confusionMatrix categories testOutput predictionsCentroids)
+    -- Writing confusion matrixes to file:
+    let kNNMatrix = confusionMatrix categories testOutput predictionsKNN
+    let kNNMatrixStr = alignedMatrixStringInt kNNMatrix (length dataSet)
+    let centroidsMatrix = confusionMatrix categories testOutput predictionsCentroids
+    let centroidsMatrixStr = alignedMatrixStringInt centroidsMatrix (length dataSet)
+    let fileContents = "vizinho mais próximo:\n" ++ kNNMatrixStr ++ "\n" ++ "centroides:\n" ++ centroidsMatrixStr
+    writeFile outputTxtPath fileContents
