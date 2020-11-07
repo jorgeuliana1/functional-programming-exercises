@@ -1,8 +1,10 @@
 module SimplifiedIO where
+import System.IO
 
 getInput :: String -> IO String
 getInput message = do
     putStr message
+    hFlush stdout
     result <- getLine
     return result
 
