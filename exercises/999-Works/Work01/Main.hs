@@ -8,7 +8,6 @@ import Scoring
 import ConfusionMatrix
 import SimplifiedIO
 
--- The main function currently only serves testing purposes.
 main = do
     -- Getting info from the standard input:
     dataSetCSVPath <- getInput "Forneca o nome do arquivo de entrada: "
