@@ -2,7 +2,15 @@ module Scoring where
 import DataSet
 import VectorMath
 
--- Comparing the obtained results with the expected results
+{--
+This function compares the obtained results with the expected results and returns
+the numbers of correct predictions over the total number of predictions.
+# Input:
+predictedR :: [IrisCategory] (Predicted results.)
+expectedR  :: [IrisCategory] (Expected results.)
+# Output:
+accuracy :: Double (The accuracy of the predictions.)
+--}
 evaluatePrediction :: [IrisCategory] -> [IrisCategory] -> Double
 evaluatePrediction predictedR expectedR = correctPredictionsCount / dataSetLength
     where

@@ -1,6 +1,13 @@
 module SimplifiedIO where
 import System.IO
 
+{-
+Simillar to the `input()` function in Python. Shows an message in the stdout and waits for input.
+# Input:
+message :: String (Message to be shown in the stdout)
+# Output:
+result :: IO String (Input from stdin)
+-}
 getInput :: String -> IO String
 getInput message = do
     putStr message
@@ -8,18 +15,42 @@ getInput message = do
     result <- getLine
     return result
 
+{--
+Takes a number and returns a string of the number with fixed decimal cases.
+# Input:
+n :: Double (The number to be converted to string.)
+cases :: Int (The number of decimal cases to be considered.)
+# Output:
+strNum :: String (The 'stringified' number.)
+--}
 fixedDecimalCasesNum :: Double -> Int -> String
 fixedDecimalCasesNum n cases = take numChars ((show n) ++ ['0' | i <- [0..]])
     where
         numChars = (length $ show $ floor n) + cases + 1
 
+{--
+Converts a given Double to it's equivalent in percentage notation.
+# Input:
+n :: Double (The number to be converted.)
+# Ouput:
+p :: String (The number in percentage notation.)
+--}
 decimalToPercentage :: Double -> String
 decimalToPercentage n = (fixedDecimalCasesNum (n * 100) 2) ++ "%"
 
+{--
+This function inserts spaces before a given number in order to fit it in a predefined space.
+# Input:
+biggestNum :: Int (Biggest num to be fit in the space.)
+num :: Int (The number to be converted to spaced string.)
+# Ouput:
+spacedString :: String (The spaced 'stringified' number.)
+--}
 spacedInt :: Int -> Int -> String
 spacedInt biggestNum num =
     reverse $ take (length $ show biggestNum) ((reverse $ show num) ++ [' ' | i <- [0..]])
 
+-- Auxiliary function: converts a list of strings into one string of the form "string1, string2, ..., stringN"
 stringifyVector :: [String] -> Int -> String -> String
 stringifyVector [] vectorL str = str
 stringifyVector (x:xs) vectorL str
@@ -27,15 +58,26 @@ stringifyVector (x:xs) vectorL str
     | str == "" = stringifyVector xs (vectorL - 1) (str ++ x)
     | otherwise = stringifyVector xs (vectorL - 1) (str ++ "," ++ x)
 
+-- Auxiliary function: converts a list of int into one string of spaced ints. Eg.: "  1,  2,  3,  4,  5"
 alignedVectorStringInt :: Int -> [Int] -> String
 alignedVectorStringInt biggestNum vector = stringifyVector spacedNumbers (length spacedNumbers) ""
     where
         spacedNumbers = map (spacedInt biggestNum) vector
 
+-- Auxiliary function: simillar to `stringifyVector` but works in matrixes.
 stringifyMatrix :: [String] -> String -> String
 stringifyMatrix [] str = str
 stringifyMatrix (x:xs) str = stringifyMatrix xs (str ++ x ++ "\n")
 
+{--
+stringifyVector + alignedVectorStringInt + stringifyMatrix + alignedMatrixStringInt
+The `alignedMatrixStringInt` returns the 'stringified' version of a matrix of Int. The other functions are auxiliary.
+# Input:
+matrix :: [[Int]] (Matrix to be converted to string.)
+biggestNum :: Int (Biggest possible number in the string. To be used as reference in the internal `spacedInt` call)
+# Output:
+matrixString :: String (The string representation of the matrix.)
+--}
 alignedMatrixStringInt :: [[Int]] -> Int -> String
 alignedMatrixStringInt matrix biggestNum = stringifyMatrix vectorsList ""
     where
