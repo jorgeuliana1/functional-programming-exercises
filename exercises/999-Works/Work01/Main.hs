@@ -41,6 +41,6 @@ main = do
     let kNNMatrix = confusionMatrix categories testOutput predictionsKNN
     let kNNMatrixStr = alignedMatrixStringInt kNNMatrix (length dataSet)
     let centroidsMatrix = confusionMatrix categories testOutput predictionsCentroids
-    let centroidsMatrixStr = alignedMatrixStringInt centroidsMatrix (length dataSet)
+    let centroidsMatrixStr = alignedMatrixStringInt centroidsMatrix 100 -- Fixed the maximum value to 100 to better fit in the work requirements.
     let fileContents = "vizinho mais próximo:\n" ++ kNNMatrixStr ++ "\n" ++ "centroides:\n" ++ centroidsMatrixStr
     writeFile outputTxtPath fileContents
