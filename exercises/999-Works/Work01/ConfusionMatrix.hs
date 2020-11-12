@@ -24,5 +24,5 @@ pOut :: [IrisCategory] (predicted outputs of the model)
 confusionMatrix :: [[Int]] (the confusion matrix)
 -}
 confusionMatrix :: [IrisCategory] -> [IrisCategory] -> [IrisCategory] -> [[Int]]
-confusionMatrix cats eOut pOut = [ [ categoriesConfusionCount i j eOut pOut | j <- cats ]
+confusionMatrix cats eOut pOut = [ [ categoriesConfusionCount j i eOut pOut | j <- cats ]
                                  | i <- cats ]
