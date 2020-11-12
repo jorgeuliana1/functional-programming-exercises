@@ -1,5 +1,5 @@
 module SimplifiedIO where
-import System.IO
+import System.IO (hFlush, stdout)
 
 {-
 Simillar to the `input()` function in Python. Shows an message in the stdout and waits for input.
@@ -14,29 +14,6 @@ getInput message = do
     hFlush stdout
     result <- getLine
     return result
-
-{--
-Takes a number and returns a string of the number with fixed decimal cases.
-# Input:
-n :: Double (The number to be converted to string.)
-cases :: Int (The number of decimal cases to be considered.)
-# Output:
-strNum :: String (The 'stringified' number.)
---}
-fixedDecimalCasesNum :: Double -> Int -> String
-fixedDecimalCasesNum n cases = take numChars ((show n) ++ ['0' | i <- [0..]])
-    where
-        numChars = (length $ show $ floor n) + cases + 1
-
-{--
-Converts a given Double to it's equivalent in percentage notation.
-# Input:
-n :: Double (The number to be converted.)
-# Ouput:
-p :: String (The number in percentage notation.)
---}
-decimalToPercentage :: Double -> String
-decimalToPercentage n = (fixedDecimalCasesNum (n * 100) 2) ++ "%"
 
 {--
 This function inserts spaces before a given number in order to fit it in a predefined space.

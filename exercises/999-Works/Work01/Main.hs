@@ -1,4 +1,5 @@
-import System.IO
+import System.IO (writeFile)
+import Text.Printf (printf)
 import DataSetParse
 import DataSetSplit
 import DataSetCategories
@@ -34,8 +35,8 @@ main = do
     let accuracyKNN = evaluatePrediction predictionsKNN testOutput
 
     -- Printing the accuracy:
-    putStrLn ("Acuracia(vizinho): " ++ (decimalToPercentage accuracyKNN))
-    putStrLn ("Acuracia(centroide): " ++ (decimalToPercentage accuracyCentroids))
+    printf "Acuracia(vizinho): %.2f%%\n" (accuracyKNN * 100)
+    printf "Acuracia(centroide): %.2f%%\n" (accuracyCentroids * 100)
     
     -- Writing confusion matrixes to file:
     let kNNMatrix = confusionMatrix categories testOutput predictionsKNN
