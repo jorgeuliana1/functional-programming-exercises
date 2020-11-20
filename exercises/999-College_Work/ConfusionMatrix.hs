@@ -1,5 +1,5 @@
 module ConfusionMatrix where
-import DataSet
+import DataSet.Types
 
 {-
 Returns the confusion count of the two categories.

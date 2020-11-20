@@ -1,6 +1,6 @@
-module DataSetSplit where
+module DataSet.Split where
 import System.Random
-import DataSet
+import DataSet.Types
 
 -- This function simplifies the proccess of initialization of random number generator.
 initializeRandomSettings :: Int -> IO ()

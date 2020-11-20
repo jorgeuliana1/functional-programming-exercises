@@ -1,6 +1,7 @@
-module DataSetParse where
+module DataSet.Parse where
+import DataSet.Types
+import Math.Vector
 import ReadCSV
-import DataSet
 
 {-
 Just a "syntatic sugar", it is used to reduce the "size" of the castIrisData function.
@@ -20,7 +21,7 @@ d :: [[String]] (CSV file represation in a list of list of strings)
 irisDataSet :: IrisDataSet (The correctly-formated data set)
 -}
 castData :: [[String]] -> IrisDataSet
-castData d = [ ([toDouble(j) | j <- (init i)], (last i)) | i <- d ]
+castData d = [ ( Vector [toDouble(j) | j <- (init i)], (last i)) | i <- d ]
 
 {-
 This function combines the readCSV function with the castData function.

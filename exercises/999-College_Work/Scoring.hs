@@ -1,6 +1,6 @@
 module Scoring where
-import DataSet
-import VectorMath
+import DataSet.Types
+import Math.Vector
 
 {--
 This function compares the obtained results with the expected results and returns

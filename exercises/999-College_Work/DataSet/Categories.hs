@@ -1,5 +1,5 @@
-module DataSetCategories where
-import DataSet
+module DataSet.Categories where
+import DataSet.Types
 
 {-
 Returns the amount of samples of a certain category.

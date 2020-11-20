@@ -1,8 +1,8 @@
 import System.IO (writeFile)
 import Text.Printf (printf)
-import DataSetParse
-import DataSetSplit
-import DataSetCategories
+import DataSet.Parse
+import DataSet.Split
+import DataSet.Categories
 import Centroid
 import NearestNeighbour
 import Scoring

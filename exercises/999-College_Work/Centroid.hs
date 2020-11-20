@@ -1,7 +1,7 @@
 module Centroid where
-import DataSet
-import DataSetCategories
-import VectorMath
+import DataSet.Types
+import DataSet.Categories
+import Math.Vector
 
 {-
 Returns a vector (centroid of the given category).
@@ -18,7 +18,7 @@ categoryCentroid dataSet category =
         | (inputs, valueCategory) <- dataSet, valueCategory == category
     ]
     where
-        categoryLen = read (show (categoryLength dataSet category)) :: Double
+        categoryLen = read (show $ categoryLength dataSet category) :: Double
 
 {-
 Returns a centroid for each given category.
@@ -43,7 +43,7 @@ nearestCentroidIndex :: [IrisDataInput] -> IrisDataInput -> Int
 nearestCentroidIndex centroids dataInput = head (take 1 [ i | i <- [0..], (distances !! i) == smallestCentroidDistance ])
     where
         smallestCentroidDistance = minimum distances
-        distances = [euclideanDistance dataInput centroid | centroid <- centroids]
+        distances = [vectorsEuclideanDistance dataInput centroid | centroid <- centroids]
 
 {-
 Returns the predictions using the centroid algorithm, given the centroids coordinates, the default categories list

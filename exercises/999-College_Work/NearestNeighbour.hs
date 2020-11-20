@@ -1,7 +1,7 @@
 module NearestNeighbour where
-import VectorMath
-import DataSet
-import DataSetCategories
+import Math.Vector
+import DataSet.Types
+import DataSet.Categories
 
 {-
 Gets a list of the distance of the given vector (vector) to a list of vectors (vector) in R4.
@@ -14,7 +14,7 @@ distances :: [Float] (Distances from dataInput to the vectors of dataSet.
                       same index in `dataSet`)
 -}
 neighboursDistance :: IrisDataInput -> IrisDataSet -> [Double]
-neighboursDistance dataInput dataSet = [ euclideanDistance dataInput inputs | (inputs, _) <- dataSet ]
+neighboursDistance dataInput dataSet = [ vectorsEuclideanDistance dataInput inputs | (inputs, _) <- dataSet ]
 
 {-
 Returns the index of the nearest neighbour.
