@@ -1,4 +1,4 @@
-module NearestNeighbour where
+module Model.NearestNeighbour where
 import Math.Vector
 import DataSet.Types
 import DataSet.Categories

@@ -1,4 +1,4 @@
-module Centroid where
+module Model.Centroid where
 import DataSet.Types
 import DataSet.Categories
 import Math.Vector

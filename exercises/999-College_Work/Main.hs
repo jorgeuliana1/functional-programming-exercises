@@ -3,8 +3,8 @@ import Text.Printf (printf)
 import DataSet.Parse
 import DataSet.Split
 import DataSet.Categories
-import Centroid
-import NearestNeighbour
+import Model.Centroid
+import Model.NearestNeighbour
 import Scoring
 import ConfusionMatrix
 import SimplifiedIO
