@@ -5,8 +5,8 @@ import DataSet.Split
 import DataSet.Categories
 import Model.Centroid
 import Model.NearestNeighbour
-import Scoring
-import ConfusionMatrix
+import Evaluation.Scoring
+import Evaluation.ConfusionMatrix
 import SimplifiedIO
 
 main = do

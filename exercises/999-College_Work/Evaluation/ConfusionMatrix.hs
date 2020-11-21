@@ -1,4 +1,4 @@
-module ConfusionMatrix where
+module Evaluation.ConfusionMatrix where
 import DataSet.Types
 
 {-

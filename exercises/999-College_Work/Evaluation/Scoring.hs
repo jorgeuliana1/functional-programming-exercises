@@ -1,4 +1,4 @@
-module Scoring where
+module Evaluation.Scoring where
 import DataSet.Types
 import Math.Vector
 
