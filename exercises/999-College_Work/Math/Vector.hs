@@ -1,11 +1,12 @@
 module Math.Vector where
+import Algorithm.Sorting
 
 {-
 This module defines useful types for vector manipulation.
 The definition of a vector in this specific implementations is a list of numbers.
 -}
 
-data Vector a = Vector [a] deriving (Eq, Show)
+data Vector a = Vector [a] deriving (Eq, Show, Ord)
 
 {-
 Length of the vector:
@@ -111,6 +112,4 @@ distance :: Floating (Distance between vectorA and vectorB)
 vectorsEuclideanDistance :: (Floating a) => Vector a -> Vector a -> a
 vectorsEuclideanDistance (Vector a) (Vector b) =
     sqrt $ sumElements $ ((Vector a) `vectorSubtraction` (Vector b)) ^^^^ 2
-
-
-
+    
