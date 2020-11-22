@@ -57,6 +57,17 @@ vectorSubtraction :: (Num a) => Vector a -> Vector a -> Vector a
 (Vector a) `vectorSubtraction` (Vector b) = Vector $ zipWith (-) a b
 
 {-
+Works as "for-each" division for vectors.
+# Input
+vectorA :: Vector Floating (Dividend)
+vectorB :: Vector Floating (Divisor)
+# Output
+vectorC :: Vector Floating (Result)
+-}
+vectorDiv :: (Floating a) => Vector a -> Vector a -> Vector a
+(Vector a) `vectorDiv` (Vector b) = Vector $ zipWith (/) a b
+
+{-
 Works as "for-each" sqrt function for vectors.
 # Input
 vector :: Vector Floating (vector to be square-rooted)
@@ -134,7 +145,7 @@ v :: Vector Double (Vector of values)
 variance :: Double (Variance of the vector)
 -}
 vectorVariance :: Vector Double -> Double
-vectorVariance (Vector v) = (1 / l) * (sum $ map (\xi -> (xi - mi)^2) v)
+vectorVariance (Vector v) = (sum $ map (\xi -> (xi - mi)^2) v) / l
     where
         l = read (show $ length v) :: Double
         mi = vectorSimpleAverage (Vector v)
