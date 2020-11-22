@@ -113,3 +113,38 @@ vectorsEuclideanDistance :: (Floating a) => Vector a -> Vector a -> a
 vectorsEuclideanDistance (Vector a) (Vector b) =
     sqrt $ sumElements $ ((Vector a) `vectorSubtraction` (Vector b)) ^^^^ 2
     
+{-
+Simple average implementation.
+# Input
+v :: Vector Double (Vector of values)
+# Ouput
+m :: Double (Double precision simple average)
+-}
+vectorSimpleAverage :: Vector Double -> Double
+vectorSimpleAverage (Vector v) = sum $ map (\x -> 1/l * x) v
+    where
+        l = toDouble $ length v
+        toDouble n = read (show n) :: Double
+
+{-
+Variance implementation.
+# Input
+v :: Vector Double (Vector of values)
+# Ouput
+variance :: Double (Variance of the vector)
+-}
+vectorVariance :: Vector Double -> Double
+vectorVariance (Vector v) = (1 / l) * (sum $ map (\xi -> (xi - mi)^2) v)
+    where
+        l = read (show $ length v) :: Double
+        mi = vectorSimpleAverage (Vector v)
+
+{-
+Standard deviation implementation.
+# Input
+v :: Vector Double (Vector of values)
+# Ouput
+sigma :: Double (Standard deviation of the set (vector))
+-}
+vectorStandardDeviation :: Vector Double -> Double
+vectorStandardDeviation (Vector v) = sqrt . vectorVariance $ Vector v
