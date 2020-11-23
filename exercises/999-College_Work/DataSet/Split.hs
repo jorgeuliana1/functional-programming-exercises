@@ -68,6 +68,30 @@ splitDataSet dataSet testSetIndexes =
     ([dataSet !! i | i <- [0..(length dataSet) - 1], not (elem i testSetIndexes)], -- Getting the train set
      [dataSet !! i | i <- testSetIndexes]) -- Getting the test set
 
+arrangeIntervals :: Int -> Int -> [[Int]] -- Divides intervals in k sets
+arrangeIntervals k listLength = (zipWith (++) firstIndexes restingIndexes) ++ lastIndexes
+    where
+        lastIndexes = [defineInterval (i - 1) l r | i <- [(r + 1)..k]]
+        firstIndexes = [defineInterval (i - 1) l r | i <- [1..r]]
+        restingIndexes = [ [i] | i <- (defineInterval k l r)]
+        defineInterval n l' r' = [ i | i <- [(n * l')..((n + 1) * l' - 1)] ]
+        l = listLength `div` k
+        r = listLength `mod` k
+
+{-
+Folds the indexes in k (given) sets.
+# Input
+k :: Int (The number of folds to be performed)
+indexes :: [Int] (Original indexes to be folded)
+# Output
+foldedIndexes :: [[Int]] (List of folded indexes)
+-}
+foldIndexes :: Int -> [Int] -> [[Int]]
+foldIndexes k indexes = foldedIndexes
+    where
+        foldedIndexes = [ [ indexes !! i | i <- ls ] | ls <- intervals ]
+        intervals = arrangeIntervals k (length indexes)
+
 {-
 Splits dataset in input and output.
 # Input
