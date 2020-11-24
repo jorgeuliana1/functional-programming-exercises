@@ -1,4 +1,4 @@
-module DataSet.Parse where
+module DataSet.Parse (parseDataFromCSVFile) where
 import DataSet.Types
 import Math.Vector
 import ReadCSV
