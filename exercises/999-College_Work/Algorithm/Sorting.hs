@@ -1,4 +1,4 @@
-module Algorithm.Sorting where
+module Algorithm.Sorting (quickSort) where
 
 {-
 Ordenates a list of ordenable elements.
