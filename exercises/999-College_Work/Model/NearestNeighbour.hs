@@ -38,25 +38,27 @@ kNearestNeighboursIndexes dataInput dataSet k =
 {-
 Returns the index of the nearest neighbour.
 # Input
+k :: Int (Number of nearest neighbours to be considered)
 dataInput :: IrisDataInput (Vector to be used as reference)
 dataSet :: IrisDataSet (List of vectors to have the distance measured)
 # Ouput
 index :: Int (Nearest neighbour index in `dataSet`)
 -}
-nearestNeighbourIndex :: IrisDataInput -> IrisDataSet -> Int
-nearestNeighbourIndex dataInput dataSet = head $ kNearestNeighboursIndexes dataInput dataSet 1
+nearestNeighbourIndex :: Int -> IrisDataInput -> IrisDataSet -> Int
+nearestNeighbourIndex k dataInput dataSet = head $ kNearestNeighboursIndexes dataInput dataSet k
 
 {-
 Returns a list of the predicted classes for the test data set.
 # Input
+k :: Int (Number of nearest neighbours to be considered)
 testDataSet :: IrisDataSet (Test data set)
 trainDataSet :: IrisDataSet (Train data set)
 # Ouput
 predictions :: [IrisCategory] (List of predictions using the train data set as "model"
                                and the test data set as data input.)
 -}
-predictDataSetNNeighbour :: IrisDataSet -> IrisDataSet -> [IrisCategory]
-predictDataSetNNeighbour testDataSet trainDataSet = [ category | (inputs, category) <- nNeighbours ]
+predictDataSetNNeighbour :: Int -> IrisDataSet -> IrisDataSet -> [IrisCategory]
+predictDataSetNNeighbour k testDataSet trainDataSet = [ category | (inputs, category) <- nNeighbours ]
     where
         nNeighbours = [ trainDataSet !! index | index <- nnIndexes ]
-        nnIndexes = [ nearestNeighbourIndex inputs trainDataSet | (inputs, _) <- testDataSet]
+        nnIndexes = [ nearestNeighbourIndex k inputs trainDataSet | (inputs, _) <- testDataSet]

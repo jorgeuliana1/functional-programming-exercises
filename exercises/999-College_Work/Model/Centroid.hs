@@ -1,6 +1,7 @@
 module Model.Centroid where
 import DataSet.Types
 import DataSet.Categories
+import DataSet.Split
 import Math.Vector
 
 {-
@@ -61,3 +62,19 @@ predictionOutputs :: [IrisCategory] (Predicted outputs, each index is correspond
 predictDataSetCentroid :: [IrisDataInput] -> [IrisCategory] -> [IrisDataInput] -> [IrisCategory]
 predictDataSetCentroid centroids categories testSetInputs = [ categories !! (nearestCentroidIndex centroids dInput)
                                                             | dInput <- testSetInputs ]
+
+{-
+Trains and predicts for the centroid method.
+# Input
+categories :: [IrisCategory] (Categories of the data set)
+testDataSet :: IrisDataSet (The data set for predictions)
+trainDataSet :: IrisDataSet (The data set for training)
+# Ouput
+predictionOutputs :: [IrisCategory] (Predicted outputs, each index is correspondent to
+                                     the same 'testDataSetInputs' index)
+-}
+trainAndPredictDataSetCentroid :: [IrisCategory] -> IrisDataSet -> IrisDataSet -> [IrisCategory]
+trainAndPredictDataSetCentroid categories testDataSet trainDataSet =
+    predictDataSetCentroid (centroids trainDataSet categories) categories testSetInputs
+    where
+        (testSetInputs, testSetOutputs) = splitDataSetInputOutput testDataSet

@@ -1,4 +1,4 @@
-module Algorithm.Fold (kFold) where
+module Algorithm.Splitting (kFold) where
 
 {-
 Generates a list of indexes of a specific sub-interval.

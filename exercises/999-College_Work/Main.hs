@@ -7,12 +7,15 @@ import Model.Centroid
 import Model.NearestNeighbour
 import Evaluation.Scoring
 import Evaluation.ConfusionMatrix
+import Algorithm.Splitting (kFold)
 import SimplifiedIO
 
 main = do
     -- Getting info from the standard input:
     dataSetCSVPath <- getInput "Forneca o nome do arquivo de entrada: "
     outputTxtPath <- getInput "Forneca o nome do arquivo de saida: "
+    foldsNumStr <- getInput "Forneca o numero de folds: "
+    neighboursNumStr <- getInput "Forneca o numero de vizinhos: "
     testCasesPercentageStr <- getInput "Forneca o percentual de exemplos de teste: "
     let testCasesPercentage = (read testCasesPercentageStr :: Float) / 100
     givenSeedStr <- getInput "Forneca o valor da semente para geracao randomizada: "
@@ -21,17 +24,17 @@ main = do
     dataSet <- parseDataFromCSVFile dataSetCSVPath
     initializeRandomSettings (read givenSeedStr :: Int)
     testSetIndexes <- getTestSetIndexes (length dataSet) testCasesPercentage
+    let foldedIndexes = kFold (read foldsNumStr :: Int) testSetIndexes
     let (trainSet, testSet) = splitDataSet dataSet testSetIndexes
     let (testInput, testOutput) = splitDataSetInputOutput testSet
     let categories = dataSetCategories dataSet
 
     -- Showing the centroids accuracy:
-    let trainCentroids = centroids trainSet categories
-    let predictionsCentroids = predictDataSetCentroid trainCentroids categories testInput
+    let predictionsCentroids = trainAndPredictDataSetCentroid categories testSet trainSet
     let accuracyCentroids = evaluatePrediction predictionsCentroids testOutput
 
     -- Showing the k-NN method accuracy:
-    let predictionsKNN = predictDataSetNNeighbour testSet trainSet
+    let predictionsKNN = predictDataSetNNeighbour 1 testSet trainSet
     let accuracyKNN = evaluatePrediction predictionsKNN testOutput
 
     -- Printing the accuracy:
