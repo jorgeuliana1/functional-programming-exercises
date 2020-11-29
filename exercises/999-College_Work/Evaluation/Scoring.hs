@@ -1,5 +1,6 @@
 module Evaluation.Scoring where
 import DataSet.Types
+import DataSet.Split
 import Math.Vector
 
 {--
@@ -17,3 +18,10 @@ evaluatePrediction predictedR expectedR = correctPredictionsCount / dataSetLengt
         correctPredictionsCount = sum [ 1.00 | i <- [0..(length predictedR) - 1],
                                         (predictedR !! i) == (expectedR !! i) ]
         dataSetLength = read (show (length predictedR)) :: Double
+
+evaluatePredictions :: [[IrisCategory]] -> IrisDataSet -> [[Int]] -> Vector Double
+evaluatePredictions predictedRs dataSet foldedIndexes =
+    Vector [ evaluatePrediction predictedR (expectedR is)
+           | (predictedR, is) <- (zip predictedRs foldedIndexes) ]
+    where
+        expectedR indexes = snd $ splitDataSetInputOutput $ snd $ splitDataSet dataSet indexes
