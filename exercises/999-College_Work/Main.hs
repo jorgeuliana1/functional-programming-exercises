@@ -26,7 +26,7 @@ main = do
     dataSetIndexes <- getTestSetIndexes (length dataSet) 1
     let foldedIndexes = kFold (read foldsNumStr :: Int) dataSetIndexes
     let categories = dataSetCategories dataSet
-
+    
     -- Showing the centroids accuracy:
     let centroidValidation = crossValidate $ trainAndPredictDataSetCentroid categories
     let predictionsCentroids = centroidValidation dataSet foldedIndexes
@@ -35,14 +35,14 @@ main = do
     let sDeviationCentroids = vectorStandardDeviation accuraciesCentroids
 
     -- Showing the 1-NN method accuracy:
-    let nnValidation = crossValidate $ predictDataSetNNeighbour 1
+    let nnValidation = crossValidate $ predictDataSetNNeighbour 1 categories
     let predictionsNN = nnValidation dataSet foldedIndexes
     let accuraciesNN = evaluatePredictions predictionsNN dataSet foldedIndexes
     let accuracyNN = vectorSimpleAverage accuraciesNN
     let sDeviationNN = vectorStandardDeviation accuraciesNN
 
     -- Showing the k-NN method accuracy:
-    let knnValidation = crossValidate $ predictDataSetNNeighbour (read neighboursNumStr :: Int)
+    let knnValidation = crossValidate $ predictDataSetNNeighbour (read neighboursNumStr :: Int) categories
     let predictionsKNN = knnValidation dataSet foldedIndexes
     let accuraciesKNN = evaluatePredictions predictionsKNN dataSet foldedIndexes
     let accuracyKNN = vectorSimpleAverage accuraciesKNN

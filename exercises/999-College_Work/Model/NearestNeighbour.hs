@@ -28,7 +28,7 @@ indexes :: [Int] (The k nearest neighbours indexes in `dataSet`)
 -}
 kNearestNeighboursIndexes :: IrisDataInput -> IrisDataSet -> Int -> [Int]
 kNearestNeighboursIndexes dataInput dataSet k =
-    filter (\i -> (currIndexDistance i) `elem` cresDistances) [0..]
+    filter (\i -> (currIndexDistance i) `elem` cresDistances) [0..((length dataSet) - 1)]
     where
         currIndexDistance i = vectorsEuclideanDistance dataInput $ currIndexVector i
         currIndexVector i = fst $ dataSet !! i
@@ -47,18 +47,36 @@ index :: Int (Nearest neighbour index in `dataSet`)
 nearestNeighbourIndex :: Int -> IrisDataInput -> IrisDataSet -> Int
 nearestNeighbourIndex k dataInput dataSet = head $ kNearestNeighboursIndexes dataInput dataSet k
 
+kNNSamplesByCategory :: Int -> [IrisCategory] -> IrisDataInput -> IrisDataSet -> [IrisDataSet]
+kNNSamplesByCategory k categories dataInput dataSet = [ categorySamples c | c <- categories ]
+    where
+        categorySamples c = [ dataSet !! i | i <- nnIndexes, c == (snd $ dataSet !! i) ]
+        nnIndexes = kNearestNeighboursIndexes dataInput dataSet k
+
+kNNCategory :: Int -> [IrisCategory] -> IrisDataInput -> IrisDataSet -> IrisCategory
+kNNCategory k categories dataInput dataSet = category
+    where
+        category = snd $ possibleNearestNeighbours !! nearestNeighbourIndex
+        nearestNeighbourIndex = head $ kNearestNeighboursIndexes dataInput possibleNearestNeighbours 1
+        possibleNearestNeighbours = foldl (++) [] [
+                             samples | samples <- samplesByCategory,
+                             (length samples) == (maximum categoriesOccurrences)
+                            ]
+        categoriesOccurrences = [ length categorySamples | categorySamples <- samplesByCategory ]
+        samplesByCategory = kNNSamplesByCategory k categories dataInput dataSet
+        
 {-
 Returns a list of the predicted classes for the test data set.
 # Input
 k :: Int (Number of nearest neighbours to be considered)
+categories :: [IrisCategory] (List of categories of the data set)
 testDataSet :: IrisDataSet (Test data set)
 trainDataSet :: IrisDataSet (Train data set)
 # Ouput
 predictions :: [IrisCategory] (List of predictions using the train data set as "model"
                                and the test data set as data input.)
 -}
-predictDataSetNNeighbour :: Int -> IrisDataSet -> IrisDataSet -> [IrisCategory]
-predictDataSetNNeighbour k testDataSet trainDataSet = [ category | (inputs, category) <- nNeighbours ]
+predictDataSetNNeighbour :: Int -> [IrisCategory] -> IrisDataSet -> IrisDataSet -> [IrisCategory]
+predictDataSetNNeighbour k categories testDataSet trainDataSet = nnCategories
     where
-        nNeighbours = [ trainDataSet !! index | index <- nnIndexes ]
-        nnIndexes = [ nearestNeighbourIndex k inputs trainDataSet | (inputs, _) <- testDataSet]
+        nnCategories = [ kNNCategory k categories inputs trainDataSet | (inputs, _) <- testDataSet ]

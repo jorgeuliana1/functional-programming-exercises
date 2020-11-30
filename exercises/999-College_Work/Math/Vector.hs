@@ -132,7 +132,7 @@ v :: Vector Double (Vector of values)
 m :: Double (Double precision simple average)
 -}
 vectorSimpleAverage :: Vector Double -> Double
-vectorSimpleAverage (Vector v) = sum $ map (\x -> 1/l * x) v
+vectorSimpleAverage (Vector v) = sum $ map (\x -> (1/l) * x) v
     where
         l = toDouble $ length v
         toDouble n = read (show n) :: Double
