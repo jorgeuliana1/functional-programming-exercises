@@ -47,12 +47,32 @@ index :: Int (Nearest neighbour index in `dataSet`)
 nearestNeighbourIndex :: Int -> IrisDataInput -> IrisDataSet -> Int
 nearestNeighbourIndex k dataInput dataSet = head $ kNearestNeighboursIndexes dataInput dataSet k
 
+{-
+Returns the nearest neighbours splitted into data sets.
+# Input
+k :: Int (Number of nearest neighbours to be considered)
+categories :: [IrisCategory] (List of categories of the data set)
+dataInput :: IrisDataInput (Vector to be used as reference)
+dataSet :: IrisDataSet (List of vectors to have the distance measured)
+# Ouput
+category :: [IrisDataSet] (List of data sets organized by category)
+-}
 kNNSamplesByCategory :: Int -> [IrisCategory] -> IrisDataInput -> IrisDataSet -> [IrisDataSet]
 kNNSamplesByCategory k categories dataInput dataSet = [ categorySamples c | c <- categories ]
     where
         categorySamples c = [ dataSet !! i | i <- nnIndexes, c == (snd $ dataSet !! i) ]
         nnIndexes = kNearestNeighboursIndexes dataInput dataSet k
 
+{-
+Returns the predicted class for the given input using the kNN model.
+# Input
+k :: Int (Number of nearest neighbours to be considered)
+categories :: [IrisCategory] (List of categories of the data set)
+dataInput :: IrisDataInput (Vector to be used as reference)
+dataSet :: IrisDataSet (List of vectors to have the distance measured)
+# Ouput
+category :: IrisCategory (Predicted category)
+-}
 kNNCategory :: Int -> [IrisCategory] -> IrisDataInput -> IrisDataSet -> IrisCategory
 kNNCategory k categories dataInput dataSet = category
     where

@@ -57,9 +57,11 @@ main = do
     printf "Desvio-Padrao(k-vizinhos): %.2f%%\n" (sDeviationKNN * 100)
     
     -- Writing confusion matrixes to file:
-    --let kNNMatrix = confusionMatrix categories testOutput predictionsKNN
-    let kNNMatrixStr = ""--alignedMatrixStringInt kNNMatrix (length dataSet)
-    --let centroidsMatrix = confusionMatrix categories testOutput predictionsCentroids
-    let centroidsMatrixStr = ""--alignedMatrixStringInt centroidsMatrix 100 -- Fixed the maximum value to 100 to better fit in the work requirements.
-    let fileContents = "vizinho mais próximo:\n" ++ kNNMatrixStr ++ "\n" ++ "centroides:\n" ++ centroidsMatrixStr
+    let kNNMatrix = confusionMatrixCrossValidation categories dataSet foldedIndexes predictionsKNN
+    let kNNMatrixStr = alignedMatrixStringInt kNNMatrix 100
+    let sNNMatrix = confusionMatrixCrossValidation categories dataSet foldedIndexes predictionsNN
+    let sNNMatrixStr = alignedMatrixStringInt sNNMatrix 100
+    let centroidsMatrix = confusionMatrixCrossValidation categories dataSet foldedIndexes predictionsCentroids
+    let centroidsMatrixStr = alignedMatrixStringInt centroidsMatrix 100 -- Fixed the maximum value to 100 to better fit in the work requirements.
+    let fileContents = "vizinho mais próximo:\n" ++ sNNMatrixStr ++ "\n" ++ "centroides:\n" ++ centroidsMatrixStr ++ "\n" ++ "k-vizinhos mais próximos:\n" ++ kNNMatrixStr
     writeFile outputTxtPath fileContents

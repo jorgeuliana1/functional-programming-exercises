@@ -1,5 +1,7 @@
 module SimplifiedIO where
 import System.IO (hFlush, stdout)
+import Math.Matrix
+import Math.Vector
 
 {-
 Simillar to the `input()` function in Python. Shows an message in the stdout and waits for input.
@@ -36,8 +38,8 @@ stringifyVector (x:xs) vectorL str
     | otherwise = stringifyVector xs (vectorL - 1) (str ++ "," ++ x)
 
 -- Auxiliary function: converts a list of int into one string of spaced ints. Eg.: "  1,  2,  3,  4,  5"
-alignedVectorStringInt :: Int -> [Int] -> String
-alignedVectorStringInt biggestNum vector = stringifyVector spacedNumbers (length spacedNumbers) ""
+alignedVectorStringInt :: Int -> Vector Int -> String
+alignedVectorStringInt biggestNum (Vector vector) = stringifyVector spacedNumbers (length spacedNumbers) ""
     where
         spacedNumbers = map (spacedInt biggestNum) vector
 
@@ -50,12 +52,12 @@ stringifyMatrix (x:xs) str = stringifyMatrix xs (str ++ x ++ "\n")
 stringifyVector + alignedVectorStringInt + stringifyMatrix + alignedMatrixStringInt
 The `alignedMatrixStringInt` returns the 'stringified' version of a matrix of Int. The other functions are auxiliary.
 # Input:
-matrix :: [[Int]] (Matrix to be converted to string.)
+matrix :: Matrix Int (Matrix to be converted to string.)
 biggestNum :: Int (Biggest possible number in the string. To be used as reference in the internal `spacedInt` call)
 # Output:
 matrixString :: String (The string representation of the matrix.)
 --}
-alignedMatrixStringInt :: [[Int]] -> Int -> String
-alignedMatrixStringInt matrix biggestNum = stringifyMatrix vectorsList ""
+alignedMatrixStringInt :: Matrix Int -> Int -> String
+alignedMatrixStringInt (Matrix matrix) biggestNum = stringifyMatrix vectorsList ""
     where
         vectorsList = map (alignedVectorStringInt biggestNum) matrix
