@@ -28,8 +28,11 @@ indexes :: [Int] (The k nearest neighbours indexes in `dataSet`)
 -}
 kNearestNeighboursIndexes :: IrisDataInput -> IrisDataSet -> Int -> [Int]
 kNearestNeighboursIndexes dataInput dataSet k =
-    filter (\i -> (currIndexDistance i) `elem` cresDistances) [0..((length dataSet) - 1)]
+    take k probableIndexes
     where
+        probableIndexes = foldr (++) [] indexesByDistance
+        indexesByDistance = [ indexesWithTheDistance d | d <- cresDistances ]
+        indexesWithTheDistance d = filter (\i -> (currIndexDistance i) == d) [0..(length dataSet) - 1]
         currIndexDistance i = vectorsEuclideanDistance dataInput $ currIndexVector i
         currIndexVector i = fst $ dataSet !! i
         cresDistances {- The k neighbours distances in crescent order -} =
@@ -78,7 +81,7 @@ kNNCategory k categories dataInput dataSet = category
     where
         category = snd $ possibleNearestNeighbours !! nearestNeighbourIndex
         nearestNeighbourIndex = head $ kNearestNeighboursIndexes dataInput possibleNearestNeighbours 1
-        possibleNearestNeighbours = foldl (++) [] [
+        possibleNearestNeighbours = foldr (++) [] [
                              samples | samples <- samplesByCategory,
                              (length samples) == (maximum categoriesOccurrences)
                             ]

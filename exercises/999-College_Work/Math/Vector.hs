@@ -32,7 +32,7 @@ addVectors :: (Num a) => Vector a -> Vector a -> Vector a
 (Vector a) `addVectors` (Vector b) = Vector $ zipWith (+) a b
 
 sumVectors :: (Num a) => [Vector a] -> Vector a
-sumVectors vs = foldr (addVectors) nullVector vs
+sumVectors vs = foldl (addVectors) nullVector vs
     where nullVector = Vector [0 | i <- [1..(lenVector $ head vs)]] -- generating a n-sized null vector.
 
 {-

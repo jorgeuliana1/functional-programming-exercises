@@ -41,8 +41,9 @@ dataInput :: IrisDataInput (Informations of the data to be analyzed)
 index :: Int (Index of the most probable class to fit in the given data input)
 -}
 nearestCentroidIndex :: [IrisDataInput] -> IrisDataInput -> Int
-nearestCentroidIndex centroids dataInput = head (take 1 [ i | i <- [0..], (distances !! i) == smallestCentroidDistance ])
+nearestCentroidIndex centroids dataInput = head $ take 1 mostProbableIndexes
     where
+        mostProbableIndexes = [ i | i <- [0..], (distances !! i) == smallestCentroidDistance ]
         smallestCentroidDistance = minimum distances
         distances = [vectorsEuclideanDistance dataInput centroid | centroid <- centroids]
 
