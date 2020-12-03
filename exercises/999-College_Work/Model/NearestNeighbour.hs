@@ -79,15 +79,23 @@ category :: Category (Predicted category)
 kNNCategory :: Int -> [Category] -> DataInput -> DataSet -> Category
 kNNCategory k categories dataInput dataSet = category
     where
-        category = snd $ possibleNearestNeighbours !! nearestNeighbourIndex
-        nearestNeighbourIndex = head $ kNearestNeighboursIndexes dataInput possibleNearestNeighbours 1
+        category = head [ c | (distance, c) <- probableCategories, distance == smallestDistance ]
+        smallestDistance = minimum [ distance | (distance, _) <- probableCategories ]
+        probableCategories = mostProbableCategories k categories dataInput dataSet
+ 
+mostProbableCategories :: Int -> [Category] -> DataInput -> DataSet -> [(Double, Category)]
+mostProbableCategories k categories dataInput dataSet = 
+    [(categorySumOfDistances c, c) | c <- dataSetCategories possibleNearestNeighbours]
+    where
+        categorySumOfDistances c =
+            sum [vectorsEuclideanDistance dataInput v | (v, cat) <- possibleNearestNeighbours, c == cat]
         possibleNearestNeighbours = foldr (++) [] [
-                             samples | samples <- samplesByCategory,
-                             (length samples) == (maximum categoriesOccurrences)
-                            ]
+                                samples | samples <- samplesByCategory,
+                                (length samples) == (maximum categoriesOccurrences)
+                                ]
         categoriesOccurrences = [ length categorySamples | categorySamples <- samplesByCategory ]
         samplesByCategory = kNNSamplesByCategory k categories dataInput dataSet
-        
+
 {-
 Returns a list of the predicted classes for the test data set.
 # Input
