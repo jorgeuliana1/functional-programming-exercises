@@ -4,15 +4,15 @@ import Math.Matrix
 import DataSet.Types
 import DataSet.Split
 
-type ValidationFunction = (IrisDataSet -> IrisDataSet -> [IrisCategory])
+type ValidationFunction = (DataSet -> DataSet -> [Category])
 
-crossValidateIteration :: ValidationFunction -> IrisDataSet -> [Int] -> [IrisCategory]
+crossValidateIteration :: ValidationFunction -> DataSet -> [Int] -> [Category]
 crossValidateIteration validationFunction dataSet testIndexes =
     validationFunction testDataSet trainDataSet
     where
         (trainDataSet, testDataSet) = splitDataSet dataSet testIndexes
 
-crossValidate :: ValidationFunction -> IrisDataSet -> [[Int]] -> [[IrisCategory]]
+crossValidate :: ValidationFunction -> DataSet -> [[Int]] -> [[Category]]
 crossValidate validationFunction dataSet testIndexesList =
     [ crossValidateIteration validationFunction dataSet testIndexes
     | testIndexes <- testIndexesList ]

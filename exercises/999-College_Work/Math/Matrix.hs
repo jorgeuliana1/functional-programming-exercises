@@ -60,8 +60,8 @@ m :: Matrix Double (Matrix to be normalized)
 # Output
 z :: Matrix Double (Normalized matrix)
 -}
-matrixNormalize :: Matrix Double -> Matrix Double
-matrixNormalize (Matrix m) = Matrix $ map (\x -> (x `vectorSubtraction` mi) `vectorDiv` sigma) m
+matrixStandardize :: Matrix Double -> Matrix Double
+matrixStandardize (Matrix m) = Matrix $ map (\x -> (x `vectorSubtraction` mi) `vectorDiv` sigma) m
     where
         mi = matrixSimpleAverage (Matrix m)
         sigma = matrixStandardDeviation (Matrix m)

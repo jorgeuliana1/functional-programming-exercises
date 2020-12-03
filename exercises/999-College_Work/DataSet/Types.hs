@@ -3,6 +3,6 @@ import Math.Vector
 
 -- This module defines useful types for the DataSet manipulation.
 
-type IrisCategory = String
-type IrisDataInput = Vector Double
-type IrisDataSet = [(Vector Double, IrisCategory)]
+type Category = String
+type DataInput = Vector Double
+type DataSet = [(Vector Double, Category)]

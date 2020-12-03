@@ -57,13 +57,13 @@ getTestSetIndexes dataSetLen testSetPercentage = do
 {-
 Splits the data set in train set and test set.
 # Input
-dataSet :: IrisDataSet (Original full-length data set)
+dataSet :: DataSet (Original full-length data set)
 testSetIndexes :: [Int] (Indexes to be transferred to the test set)
 # Output
-trainTestSets :: (IrisDataSet, IrisDataSet) (Tuple of data sets, the first is the train set
+trainTestSets :: (DataSet, DataSet) (Tuple of data sets, the first is the train set
                                              and the second is the test set)
 -}
-splitDataSet :: IrisDataSet -> [Int] -> (IrisDataSet, IrisDataSet)
+splitDataSet :: DataSet -> [Int] -> (DataSet, DataSet)
 splitDataSet dataSet testSetIndexes = 
     ([dataSet !! i | i <- [0..(length dataSet) - 1], not (elem i testSetIndexes)], -- Getting the train set
      [dataSet !! i | i <- testSetIndexes]) -- Getting the test set
@@ -71,13 +71,13 @@ splitDataSet dataSet testSetIndexes =
 {-
 Splits dataset in input and output.
 # Input
-dataSet :: IrisDataSet (Data set to be splitted into input and output)
+dataSet :: DataSet (Data set to be splitted into input and output)
 # Output
-inputOutput :: ([IrisDataInput], [IrisCategory]) (Tuple containing the data
+inputOutput :: ([DataInput], [Category]) (Tuple containing the data
                                                   set input and the correspondent
                                                   expected output)
 -}
-splitDataSetInputOutput :: IrisDataSet -> ([IrisDataInput], [IrisCategory])
+splitDataSetInputOutput :: DataSet -> ([DataInput], [Category])
 splitDataSetInputOutput dataSet = (input, output)
     where
         input = [ inputs | (inputs, _) <- dataSet ]

@@ -4,6 +4,7 @@ import Math.Vector
 import DataSet.Parse
 import DataSet.Split
 import DataSet.Categories
+import DataSet.Standardization
 import Model.Centroid
 import Model.NearestNeighbour
 import Evaluation.Scoring
@@ -21,7 +22,8 @@ main = do
     givenSeedStr <- getInput "Forneca o valor da semente para geracao randomizada: "
 
     -- Loading and splitting dataset:
-    dataSet <- parseDataFromCSVFile dataSetCSVPath
+    dataSetNonStardadized <- parseDataFromCSVFile dataSetCSVPath
+    let dataSet = standardizeDataSet dataSetNonStardadized
     initializeRandomSettings (read givenSeedStr :: Int)
     dataSetIndexes <- getTestSetIndexes (length dataSet) 1
     let foldedIndexes = kFold (read foldsNumStr :: Int) dataSetIndexes

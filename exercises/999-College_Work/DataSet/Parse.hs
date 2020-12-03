@@ -4,7 +4,7 @@ import Math.Vector
 import ReadCSV
 
 {-
-Just a "syntatic sugar", it is used to reduce the "size" of the castIrisData function.
+Just a "syntatic sugar", it is used to reduce the "size" of the castData function.
 # Input
 str :: String (String representing a Doubleing-point number)
 # Output
@@ -14,13 +14,13 @@ toDouble :: String -> Double
 toDouble str = read str :: Double
 
 {-
-Casts the string-formated data to IrisDataSet-formated data.
+Casts the string-formated data to DataSet-formated data.
 # Input
 d :: [[String]] (CSV file represation in a list of list of strings)
 # Output
-irisDataSet :: IrisDataSet (The correctly-formated data set)
+DataSet :: DataSet (The correctly-formated data set)
 -}
-castData :: [[String]] -> IrisDataSet
+castData :: [[String]] -> DataSet
 castData d = [ ( Vector [toDouble(j) | j <- (init i)], (last i)) | i <- d ]
 
 {-
@@ -28,9 +28,9 @@ This function combines the readCSV function with the castData function.
 # Input
 fp :: FilePath (The CSV file path)
 # Output
-irisDataSet :: IO IrisDataSet (The correctly-formated data set)
+DataSet :: IO DataSet (The correctly-formated data set)
 -}
-parseDataFromCSVFile :: FilePath -> IO IrisDataSet
+parseDataFromCSVFile :: FilePath -> IO DataSet
 parseDataFromCSVFile fp = do
     csvData <- readCSV fp
     return (castData csvData)
