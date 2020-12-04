@@ -27,8 +27,10 @@ matrixToDataSet dataSet (Matrix m) = zip [ dataInput | dataInput <- m ] [ catego
 Standardizes the matrix.
 # Input:
 dataSet :: DataSet (The data set to be standardized)
+baseDataSet :: DataSet
 # Output:
 dataSet :: DataSet (The standardized data set)
 --}
-standardizeDataSet :: DataSet -> DataSet
-standardizeDataSet dataSet = matrixToDataSet dataSet $ matrixStandardize $ dataSetToMatrix dataSet
+standardizeDataSet :: DataSet -> DataSet -> DataSet
+standardizeDataSet dataSet baseDataSet =
+    matrixToDataSet dataSet $ matrixStandardizeWithBase (dataSetToMatrix baseDataSet) (dataSetToMatrix dataSet)

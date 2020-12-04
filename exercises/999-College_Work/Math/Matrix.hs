@@ -54,6 +54,20 @@ matrixStandardDeviation :: Matrix Double -> Vector Double
 matrixStandardDeviation (Matrix m) = vectorSqrt $ matrixVariance (Matrix m)
 
 {-
+Normalize the matrix using another matrix for the standard-deviation and average.
+# Input
+m :: Matrix Double (Matrix to be normalized)
+base :: Matrix Double (Matrix to be used as base for the statiscal measurements)
+# Output
+z :: Matrix Double (Normalized matrix)
+-}
+matrixStandardizeWithBase :: Matrix Double -> Matrix Double -> Matrix Double
+matrixStandardizeWithBase (Matrix base) (Matrix m) = Matrix $ map (\x -> (x `vectorSubtraction` mi) `vectorDiv` sigma) m
+    where
+        mi = matrixSimpleAverage (Matrix base)
+        sigma = matrixStandardDeviation (Matrix base)
+
+{-
 Normalize the matrix.
 # Input
 m :: Matrix Double (Matrix to be normalized)
