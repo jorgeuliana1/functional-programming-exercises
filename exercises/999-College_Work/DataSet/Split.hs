@@ -36,7 +36,7 @@ getRandomListWithoutRepetitions 1 maxValue ns = do -- ns must start as an empty 
 getRandomListWithoutRepetitions setLength maxValue ns = do
     n <- generateN maxValue ns
     ns <- getRandomListWithoutRepetitions (setLength - 1) maxValue (n:ns)
-    return ns
+    return $ reverse ns
 
 {-
 Gemerates a list of random indexes of test dataset without any repetition.
